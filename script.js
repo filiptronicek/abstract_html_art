@@ -67,4 +67,4 @@ const bgLoop = setInterval(() => {
 
 document.getElementById("downloadBtn").onclick = () => {
     download(canvas.toDataURL(),`abstract_${Date.now()}.png`);
-}
+};
