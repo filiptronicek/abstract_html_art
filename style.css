@@ -1,0 +1,7 @@
+body {
+    height: 95vh;
+}
+
+canvas {
+    transition-duration: 3s;
+}
