@@ -7,7 +7,7 @@ const width = canvas.width; // 500
 const height = canvas.height; // 300
 
 function download(url, name) { // make the link. set the href and download. emulate dom click
-    const link = document.querySelector('a');
+    const link = document.getElementById('downloadLink');
     link.setAttribute("href", url);
     link.setAttribute("download", name);
     link.click();
