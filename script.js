@@ -6,6 +6,9 @@ canvas.width = document.body.scrollWidth;
 const width = canvas.width; // 500
 const height = canvas.height; // 300
 
+const etaSpan = document.getElementById("eta");
+const percentSpan = document.getElementById("perc");
+
 function download(url, name) { // make the link. set the href and download. emulate dom click
     const link = document.getElementById('downloadLink');
     link.setAttribute("href", url);
@@ -20,7 +23,7 @@ const getNextPosition = (width, height) => {
 };
 
 const getNextSize = () => {
-    return Math.floor(Math.random() * 50);
+    return Math.floor(Math.random() * 15);
 };
 
 const getRandomColor = () => {
@@ -32,7 +35,18 @@ const getRandomColor = () => {
     return color;
 };
 
+function hms(seconds) {
+  return [3600, 60]
+    .reduceRight(
+      (p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
+      r => [r]
+    )(seconds)
+    .map(a => a.toString().padStart(2, '0'))
+    .join(':');
+}
+
 window.filled = 0;
+const start = Date.now();
 
 const drawLoop = setInterval(() => {
     if (! canvas.getContext) {
@@ -55,13 +69,24 @@ const drawLoop = setInterval(() => {
     } ctx.fill();
 
     const filledPercent = window.filled/(width * height);
-    console.log(`${Math.round(100*filledPercent)}% filled`);
+    window.filledPercent = filledPercent;
+
+    const filledThreshold = 1.5;
+
+    const timeSpent = (Date.now() - start) / 1000;
+    const secondsRemaining = ((timeSpent / (filledPercent * 100)) * (filledThreshold * 100)) - timeSpent;
+
+    /* Output */
+
+    etaSpan.innerText = `ETA: ${hms(Math.floor(secondsRemaining))}`;
+    percentSpan.innerText = `Progress: ${Math.floor(filledPercent * 100)}%`;
+
     window.filled += size * size;
 
-    if (filledPercent > 1.5) {
+    if (filledPercent > filledThreshold) {
         clearInterval(drawLoop);
     }
-}, 25);
+}, 10);
 
 document.getElementById("downloadBtn").onclick = () => {
     download(canvas.toDataURL(), `abstract_${
