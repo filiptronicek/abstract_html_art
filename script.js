@@ -63,10 +63,6 @@ const drawLoop = setInterval(() => {
     }
 }, 25);
 
-const bgLoop = setInterval(() => {
-    canvas.style.background = getRandomColor();
-}, 3000);
-
 document.getElementById("downloadBtn").onclick = () => {
     download(canvas.toDataURL(), `abstract_${
         Date.now()
