@@ -27,6 +27,17 @@ const getNextSize = () => {
     return Math.floor(Math.random() * 15);
 };
 
+const drawImage = (ctx, url, position) => {
+
+    const sideSize = getNextSize() * 2;
+
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+       ctx.drawImage(image, position[0], position[1], sideSize, sideSize);
+    };
+};
+
 const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -64,13 +75,17 @@ const drawLoop = setInterval(() => {
     const generator = Math.random();
 
     ctx.fillStyle = getRandomColor();
+    
     if (generator > 0.5) {
         ctx.beginPath();
         ctx.arc(nextPos[0], nextPos[1], size, 0, 2 * Math.PI);
+    } else if (generator < 0.005) {
+        drawImage(ctx, `https://thc.vercel.app/r/paintings?c=${Math.random()}`, [nextPos[0], nextPos[1]]);
     } else {
         ctx.fillRect(nextPos[0], nextPos[1], size, size);
     } ctx.fill();
-
+    
+    
     const filledPercent = window.filled/(width * height);
     window.filledPercent = filledPercent;
 
