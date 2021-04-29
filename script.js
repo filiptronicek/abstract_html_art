@@ -35,7 +35,7 @@ const getRandomColor = () => {
     return color;
 };
 
-function hms(seconds) {
+const hms = (seconds) => {
   return [3600, 60]
     .reduceRight(
       (p, b) => r => [Math.floor(r / b)].concat(p(r % b)),
@@ -43,7 +43,7 @@ function hms(seconds) {
     )(seconds)
     .map(a => a.toString().padStart(2, '0'))
     .join(':');
-}
+};
 
 window.filled = 0;
 const start = Date.now();
