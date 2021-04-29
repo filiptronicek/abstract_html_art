@@ -79,8 +79,8 @@ const drawLoop = setInterval(() => {
     if (generator > 0.5) {
         ctx.beginPath();
         ctx.arc(nextPos[0], nextPos[1], size, 0, 2 * Math.PI);
-    } else if (generator < 0.005) {
-        drawImage(ctx, `https://thc.vercel.app/r/paintings?c=${Math.random()}`, [nextPos[0], nextPos[1]]);
+    } else if (generator < 0.025) {
+        drawImage(ctx, `https://thc.vercel.app/r/paintings?c=${Math.random()}&q=bad`, [nextPos[0], nextPos[1]]);
     } else {
         ctx.fillRect(nextPos[0], nextPos[1], size, size);
     } ctx.fill();
