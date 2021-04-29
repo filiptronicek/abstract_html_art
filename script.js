@@ -8,6 +8,7 @@ const height = canvas.height; // 300
 
 const etaSpan = document.getElementById("eta");
 const percentSpan = document.getElementById("perc");
+const placedSpan = document.getElementById("placed");
 
 function download(url, name) { // make the link. set the href and download. emulate dom click
     const link = document.getElementById('downloadLink');
@@ -46,6 +47,8 @@ const hms = (seconds) => {
 };
 
 window.filled = 0;
+window.placed = 0;
+
 const start = Date.now();
 
 const drawLoop = setInterval(() => {
@@ -80,7 +83,9 @@ const drawLoop = setInterval(() => {
 
     etaSpan.innerText = `ETA: ${hms(Math.floor(secondsRemaining))}`;
     percentSpan.innerText = `Progress: ${Math.floor((filledPercent * 100) / 1.5)}%`;
+    placedSpan.innerText = `${window.placed.toLocaleString()} (expected: ${Math.floor((window.placed / (filledPercent * 100)) * 100).toLocaleString()})`;
 
+    window.placed += 1;
     window.filled += size * size;
 
     if (filledPercent > filledThreshold) {
