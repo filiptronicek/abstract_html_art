@@ -79,7 +79,7 @@ const drawLoop = setInterval(() => {
     /* Output */
 
     etaSpan.innerText = `ETA: ${hms(Math.floor(secondsRemaining))}`;
-    percentSpan.innerText = `Progress: ${Math.floor(filledPercent * 100)}%`;
+    percentSpan.innerText = `Progress: ${Math.floor((filledPercent * 100) / 1.5)}%`;
 
     window.filled += size * size;
 
