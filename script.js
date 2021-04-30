@@ -60,6 +60,8 @@ const hms = (seconds) => {
 window.filled = 0;
 window.placed = 0;
 
+window.mode = "shapes";
+
 const start = Date.now();
 
 const drawLoop = setInterval(() => {
@@ -75,16 +77,17 @@ const drawLoop = setInterval(() => {
     const generator = Math.random();
 
     ctx.fillStyle = getRandomColor();
-    
-    if (generator > 0.5) {
-        ctx.beginPath();
-        ctx.arc(nextPos[0], nextPos[1], size, 0, 2 * Math.PI);
-    } else if (generator < 0.025) {
+
+    if (window.mode === "image") {
         drawImage(ctx, `https://thc.vercel.app/r/paintings?c=${Math.random()}&q=bad`, [nextPos[0], nextPos[1]]);
     } else {
-        ctx.fillRect(nextPos[0], nextPos[1], size, size);
-    } ctx.fill();
-    
+        if (generator > 0.5) {
+            ctx.beginPath();
+            ctx.arc(nextPos[0], nextPos[1], size, 0, 2 * Math.PI);
+        } else {
+            ctx.fillRect(nextPos[0], nextPos[1], size, size);
+        } ctx.fill();
+    }
     
     const filledPercent = window.filled/(width * height);
     window.filledPercent = filledPercent;
@@ -113,3 +116,12 @@ document.getElementById("downloadBtn").onclick = () => {
         Date.now()
     }.png`);
 };
+
+document.getElementById("mode").onchange = (e) => {
+    const ctx = canvas.getContext("2d");
+    console.log(`Changed to ${e.target.value}`);
+    window.mode = e.target.value;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+document.getElementById("mode").value = window.mode;
