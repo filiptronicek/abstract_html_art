@@ -110,6 +110,7 @@ const drawLoop = setInterval(() => {
 
     if (filledPercent > filledThreshold) {
         clearInterval(drawLoop);
+        etaSpan.innerText = `ETA: Finished`;
     }
 }, 10);
 
