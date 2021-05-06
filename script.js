@@ -10,6 +10,8 @@ const etaSpan = document.getElementById("eta");
 const percentSpan = document.getElementById("perc");
 const placedSpan = document.getElementById("placed");
 
+window.multiplier = 20;
+
 function download(url, name) { // make the link. set the href and download. emulate dom click
     const link = document.getElementById('downloadLink');
     link.setAttribute("href", url);
@@ -24,7 +26,7 @@ const getNextPosition = (width, height) => {
 };
 
 const getNextSize = () => {
-    return Math.floor(Math.random() * 15);
+    return Math.floor(Math.random() * 15 * (window.multiplier / 10));
 };
 
 const drawImage = (ctx, url, position) => {
@@ -124,4 +126,11 @@ document.getElementById("mode").onchange = (e) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
+document.getElementById("magnifier").onchange = (e) => {
+    console.log(`Changed size to ${e.target.value}`);
+    document.getElementById("magnifierNum").innerText = e.target.value;
+    window.multiplier = e.target.value;
+};
+
+document.getElementById("magnifier").value = window.multiplier;
 document.getElementById("mode").value = window.mode;
